@@ -1424,8 +1424,8 @@ class tqdm(Comparable):
             postfix[key] = kwargs[key]
         # Preprocess stats according to datatype
         for key in postfix.keys():
-            # Number: limit the length of the string
-            if isinstance(postfix[key], Number):
+            # Number (but not bool): limit the length of the string
+            if isinstance(postfix[key], Number) and not isinstance(postfix[key], bool):
                 postfix[key] = self.format_num(postfix[key])
             # Else for any other type, try to get the string conversion
             elif not isinstance(postfix[key], str):

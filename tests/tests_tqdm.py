@@ -1354,6 +1354,15 @@ def test_postfix(caperr):
     assert out5[1:-1].split(', ')[3:] == ["World"]
 
 
+def test_postfix_bool(caperr):
+    """Test that `bool` postfix values are not formatted as numbers"""
+    with tqdm(total=10, bar_format='{postfix}', postfix={'done': True}) as t:
+        assert t.postfix == 'done=True'
+        t.set_postfix(ok=False, n=1)
+        assert t.postfix == 'n=1, ok=False'
+    assert 'ok=False' in caperr()
+
+
 def test_postfix_direct(caperr):
     """Test directly assigning non-str objects to postfix"""
     with tqdm(total=10, miniters=1, mininterval=0,
